@@ -1,0 +1,20 @@
+name: greetings 'Hello, World'
+
+on: push
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: setup project
+        run: make setup
+      - name: running test
+        run: make test
+      - name: running linter
+        run: make lint
