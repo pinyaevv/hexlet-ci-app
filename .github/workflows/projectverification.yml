@@ -1,4 +1,4 @@
-name: greetings 'Hello, World'
+name: Test project by Snyk
 
 on: push
 
@@ -10,11 +10,17 @@ jobs:
         os: [ubuntu-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+           node-version: 18
       - name: setup project
         run: make setup
       - name: running test
         run: make test
       - name: running linter
         run: make lint
+      - name: Running Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
